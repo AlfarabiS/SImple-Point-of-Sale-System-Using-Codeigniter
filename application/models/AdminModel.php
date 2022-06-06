@@ -64,7 +64,7 @@ class AdminModel extends CI_Model {
       $this->db->update('barang',['stok' => $stok_update]);
     }
 
-    fungsi untuk mendapatakn data dari tabel transaksi
+    //fungsi untuk mendapatakn data dari tabel transaksi
     public function semua_penjualan(){
       $query = $this->db->query('CALL SEMUA_PENJUALAN()');
 
