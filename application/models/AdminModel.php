@@ -5,7 +5,7 @@ class AdminModel extends CI_Model {
     
     
     public function semua_barang(){
-      
+      //mengambil semua data dari tabel barang    
       $query = $this->db->query('CALL STOK_BARANG()');
 
       return $query->result_array();
@@ -14,6 +14,7 @@ class AdminModel extends CI_Model {
 
     public function kategori_barang(){
       
+      //mengambil data dari dari tabel kategori
       $query = $this->db->query('SELECT * FROM kategori');
 
       return $query->result_array();
@@ -21,7 +22,7 @@ class AdminModel extends CI_Model {
     }
 
     public function pencarian_barang($keyword){
-      
+    //fungsi pencarian barang
       $this->db->select('*');
       $this->db->from('barang');
       $this->db->join('kategori', 'barang.id_kategori=kategori.id_kategori','innner');
@@ -35,6 +36,7 @@ class AdminModel extends CI_Model {
 
     }
 
+    //fungsi untuk update stok barang di halaman home
     public function update_stok($id_br,$stok_br){
       $query = $this->db->get_where('barang',['id_barang' => $id_br])->row_array();
       $stok_update = $query['stok'] + $stok_br;
@@ -43,14 +45,17 @@ class AdminModel extends CI_Model {
       $this->db->update('barang',['stok' => $stok_update]);
     }
 
+    //fungsi untuk menambahkan barang
     public function insert_barang($data){
       $this->db->insert('barang',$data);
     }
 
+    //funsi untuk menambahkan transaksi
     public function insert_transaksi($transaksi){
       $this->db->insert('transaksi',$transaksi);
     }
     
+    //funsi untuk update stok barang saat transaksi
     public function update_transaksi($id_br,$stok_br){
       $query = $this->db->get_where('barang',['id_barang' => $id_br])->row_array();
       $stok_update = $query['stok'] - $stok_br;
@@ -59,6 +64,7 @@ class AdminModel extends CI_Model {
       $this->db->update('barang',['stok' => $stok_update]);
     }
 
+    fungsi untuk mendapatakn data dari tabel transaksi
     public function semua_penjualan(){
       $query = $this->db->query('CALL SEMUA_PENJUALAN()');
 

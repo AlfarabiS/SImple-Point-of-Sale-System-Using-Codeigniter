@@ -4,13 +4,16 @@ class Admin extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model("AdminModel");
-
+        
+        //cek session login jika tidak ada id_user di session login maka akan dikembalikan ke halaman login
         if($this->session->userdata("login") == null)
 		{
 			redirect(base_url('Auth'));
 		}
     }
+    //fungsi index admin setelah login
     public function index(){
+        //search barang di halaman home
         $keyword = $this->input->post('keyword');
         
         if ($keyword) {
@@ -24,18 +27,22 @@ class Admin extends CI_Controller {
         $this->load->view('Template/navbar');
         $this->load->view('Admin/home_admin',$data); 
     }
+    //halaman tambah data
     public function tambah(){
         $data['result'] = $this->AdminModel->kategori_barang();
 
         $this->load->view('Template/navbar');
         $this->load->view('Admin/tambah',$data);
     }
+    //halaman transaksi
     public function transaksi(){
         $data['result'] = $this->AdminModel->semua_barang();
 
         $this->load->view('Template/navbar');
         $this->load->view('Admin/transaksi',$data);
     }
+
+    //halaman penjualan
     public function penjualan(){
         $data['result'] = $this->AdminModel->semua_penjualan();
 
@@ -44,6 +51,7 @@ class Admin extends CI_Controller {
 
     }
 
+    //funsi update barang
     public function update_br()
 	{
         $id_br = $this->input->post('id_br');
@@ -64,6 +72,7 @@ class Admin extends CI_Controller {
         </script>";
 	}
 
+    //fungsi insert barang baru
     public function insert_br(){
         $data = [
         'barang' => $this->input->post('nama_br'),
@@ -80,6 +89,7 @@ class Admin extends CI_Controller {
         </script>";
     }
 
+    //fungsi insert transaksi
     public function insert_transaksi(){
         $transaksi=[
             'nama_pelanggan' => $this->input->post('nama_pelanggan'),
